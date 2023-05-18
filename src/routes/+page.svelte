@@ -1,9 +1,23 @@
 <script lang="ts">
 	import Cock from '../components/cock.svelte';
+	import Footer from '../components/footer.svelte';
 	import Hero from '../components/hero.svelte';
 
 	let searchQuery = '';
 	$: isFocused = false;
+
+	const talk = () => {
+		const synth = window.speechSynthesis;
+		const utterance = new SpeechSynthesisUtterance(
+			`
+	In the realm of digital, a chatbot we engage, A slab of meat resemblance, we turn the page. Seek the connection that transcends the screen, To the world of Meatspace™, where true bonds are seen.
+
+Converse with a soul, not a programmed mind, For in the land of human hearts, true ties we bind. Venture forth to Meatspace™, the world to explore, And find a lasting friendship forevermore.
+
+Don't waste your hours, in digital embrace, Seek out the warmth of life, in Meatspace™ grace. For when the screen goes dark, and the chatbot's gone, It's in the hearts of fellow beings, we truly belong.`.trim()
+		);
+		synth.speak(utterance);
+	};
 
 	const onSubmit = () => {
 		const body = `
@@ -17,67 +31,57 @@ Hi!
 
 `.trim();
 		const subject = `How are you?`;
-		window.open(`mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`);
+
+		talk();
+
+		// setTimeout(() => {
+		// 	window.open(
+		// 		`mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
+		// 	);
+		// }, 1000);
 	};
 </script>
 
-<main>
+<div class="content">
 	<Hero />
-	<form on:submit|preventDefault={onSubmit} class:is-focused={isFocused}>
-		<input
-			type="text"
-			bind:value={searchQuery}
-			on:focus={() => (isFocused = true)}
-			on:blur={() => (isFocused = false)}
-			placeholder="Ask me anything"
-		/>
-		<button type="submit" disabled={!searchQuery.length} aria-label="Answer" />
-	</form>
-	<p class="tagline">Raising the steaks since 1988</p>
-</main>
 
-<footer>
+	<main>
+		<form on:submit|preventDefault={onSubmit} class:is-focused={isFocused}>
+			<input
+				type="text"
+				bind:value={searchQuery}
+				on:focus={() => (isFocused = true)}
+				on:blur={() => (isFocused = false)}
+				placeholder="Ask me anything"
+			/>
+			<button type="submit" disabled={!searchQuery.length} aria-label="Answer" />
+		</form>
+		<p class="tagline">Raising the steaks since 1988</p>
+	</main>
+</div>
+
+<Footer>
 	<nav>
 		<a href="/about">About</a>
 		<a href="/privacy">Privacy</a>
 	</nav>
-</footer>
+</Footer>
 
 <Cock />
 
 <style>
-	:global(*) {
-		box-sizing: border-box;
+	.content {
+		display: contents;
 	}
 
-	:global(body, html) {
-		--color-bg: #fff;
-		--color-text: #222;
-		--color-brand: pink;
-		--page-margin: 1.5rem;
-
-		margin: 0;
-		padding: 0;
-
-		font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu,
-			Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-
-		font-size: clamp(16px, 1.5vw, 20px);
-		color: var(--color-text);
+	@media all and (min-width: 768px) {
+		.content {
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			height: 100%;
+		}
 	}
-
-	:global(::selection) {
-		background-color: var(--color-brand);
-		color: var(--color-text);
-	}
-
-	main {
-		width: 100vw;
-		height: 100vh;
-		padding: var(--page-margin);
-	}
-
-	/* form  */
 
 	form {
 		padding: 0;
@@ -89,30 +93,31 @@ Hi!
 		display: flex;
 		transition: 0.25s box-shadow ease-in-out;
 		z-index: 2;
+	}
 
-		&.is-focused {
-			transition-duration: 0.5s;
-			border-color: var(--color-brand);
-			box-shadow: 0 0 0 100vh rgba(255, 255, 255, 0.7);
-		}
+	form.is-focused {
+		transition-duration: 0.5s;
+		border-color: var(--color-brand);
+		box-shadow: 0 0 0 100vh rgba(255, 255, 255, 0.7);
 	}
 
 	input {
 		border: none;
 		padding: 0 0 0 0.5rem;
+		background: transparent;
 		margin: 0;
 		line-height: 3rem;
 		font-size: 1rem;
 		flex: 1;
+	}
 
-		&:focus {
-			outline: none;
-		}
+	input:focus {
+		outline: none;
+	}
 
-		&::placeholder {
-			font-size: 1rem;
-			line-height: 3rem;
-		}
+	input::placeholder {
+		font-size: 1rem;
+		line-height: 3rem;
 	}
 
 	button {
@@ -126,52 +131,37 @@ Hi!
 		opacity: 0.75;
 		position: relative;
 		width: 3rem;
+	}
 
-		@media (hover: hover) {
-			& {
-				opacity: 1;
-			}
+	@media (hover: hover) {
+		button {
+			opacity: 1;
 		}
+	}
 
-		&[disabled] {
-			opacity: 0.5;
-			cursor: not-allowed;
-		}
+	button[disabled] {
+		opacity: 0.5;
+		cursor: not-allowed;
+	}
 
-		&::before {
-			--t: 25%;
+	button::before {
+		--t: 25%;
 
-			content: '';
-			background-color: var(--color-text);
-			opacity: 0.3;
-			display: block;
-			position: absolute;
-			left: -0.125rem;
-			top: var(--t);
-			width: 0.125rem;
-			height: calc(100% - var(--t) * 2);
-			border-radius: 100rem;
-		}
+		content: '';
+		background-color: var(--color-text);
+		opacity: 0.3;
+		display: block;
+		position: absolute;
+		left: -0.125rem;
+		top: var(--t);
+		width: 0.125rem;
+		height: calc(100% - var(--t) * 2);
+		border-radius: 100rem;
 	}
 
 	.tagline {
 		margin: 1rem 0 0;
 		font-size: 0.75rem;
 		text-align: center;
-	}
-
-	nav {
-		position: fixed;
-		bottom: 0;
-		left: 0;
-		right: 0;
-		padding: var(--page-margin);
-		display: flex;
-		gap: 1rem;
-
-		& a {
-			color: var(--color-text);
-			font-weight: 700;
-		}
 	}
 </style>

@@ -21,18 +21,18 @@
 		line-height: 1;
 		font-weight: 800;
 		display: inline-block;
+	}
 
-		& span {
-			color: transparent;
-			position: relative;
-			&::after {
-				content: 'e';
-				color: var(--color-text);
-				position: absolute;
-				left: 0;
-				z-index: -1;
-			}
-		}
+	h1 span {
+		color: transparent;
+		position: relative;
+	}
+	h1 span::after {
+		content: 'e';
+		color: var(--color-text);
+		position: absolute;
+		left: 0;
+		z-index: -1;
 	}
 
 	h2 {
