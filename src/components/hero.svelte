@@ -1,5 +1,12 @@
-<div>
-	<img src="./meat.webp" alt="A rare beef shoulder, isolated on a white background." />
+<script lang="ts">
+	export let isActive = false;
+</script>
+
+<div class="container" class:is-active={isActive}>
+	<div class="meat-tuxedo">
+		<img src="./meat.webp" alt="A rare beef shoulder, isolated on a white background." />
+		<div class="eyes" />
+	</div>
 	<header>
 		<h1>M<span>e</span>atGPT</h1>
 		<h2>Prime answers to rare questions</h2>
@@ -13,6 +20,20 @@
 		justify-content: center;
 		position: relative;
 		top: -2.05rem;
+
+		transition: 0.4s opacity ease-in-out;
+	}
+
+	.container {
+		transition: 1s translate ease-in-out;
+	}
+
+	.container.is-active {
+		translate: 0 15vh;
+	}
+
+	.container.is-active header {
+		opacity: 0;
 	}
 
 	h1 {
@@ -45,9 +66,46 @@
 		left: 0.2em;
 		align-self: start;
 	}
+
+	.meat-tuxedo {
+		position: relative;
+	}
+
+	.container.is-active .meat-tuxedo {
+		animation: dance-up-and-down 0.8s 1s ease-in-out infinite both;
+	}
+
+	.eyes {
+		position: absolute;
+		display: block;
+		inset: 25% 15% 15% 15%;
+		background-image: url(./eyes.png);
+		background-size: contain;
+		background-repeat: no-repeat;
+		background-position: center;
+		opacity: 0;
+		transition: 0.4s 1s opacity ease-in-out;
+	}
+
+	.container.is-active .eyes {
+		opacity: 1;
+	}
+
 	img {
 		height: auto;
 		max-width: 100%;
 		vertical-align: bottom;
+	}
+
+	@keyframes dance-up-and-down {
+		0% {
+			transform: translateY(0);
+		}
+		50% {
+			transform: translateY(-0.5rem);
+		}
+		100% {
+			transform: translateY(0);
+		}
 	}
 </style>
