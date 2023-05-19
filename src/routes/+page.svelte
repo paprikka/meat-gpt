@@ -2,76 +2,118 @@
 	import Cock from '../components/cock.svelte';
 	import Footer from '../components/footer.svelte';
 	import Hero from '../components/hero.svelte';
+	import PageContainer from '../components/page-container.svelte';
+	import PathText from '../components/path-text.svelte';
+	import { lyrics, songPath } from '../lyrics';
+	import { currentTime } from '../player';
+	import { wait } from '../wait';
 
 	let searchQuery = '';
-	$: isFocused = false;
+	let isFocused = false;
+	let isSubmitting = false;
+	let isWaitingToSubmit = false;
+
+	let audio: HTMLAudioElement | null = null;
+
+	const arm = () => {
+		audio = new Audio('/silence.mp3');
+		audio.play();
+	};
 
 	const talk = () => {
 		const synth = window.speechSynthesis;
-		const utterance = new SpeechSynthesisUtterance(
-			`
-	In the realm of digital, a chatbot we engage, A slab of meat resemblance, we turn the page. Seek the connection that transcends the screen, To the world of Meatspace™, where true bonds are seen.
-
-Converse with a soul, not a programmed mind, For in the land of human hearts, true ties we bind. Venture forth to Meatspace™, the world to explore, And find a lasting friendship forevermore.
-
-Don't waste your hours, in digital embrace, Seek out the warmth of life, in Meatspace™ grace. For when the screen goes dark, and the chatbot's gone, It's in the hearts of fellow beings, we truly belong.`.trim()
-		);
+		const utterance = new SpeechSynthesisUtterance(lyrics);
 		synth.speak(utterance);
 	};
 
-	const onSubmit = () => {
-		const body = `
-Hi!
+	const onFocus = () => {
+		isFocused = true;
+		arm();
+	};
 
-// Placeholder:
-// Instead of wasting your time talking to a chatbot
-// looking like a slab of meat message someone
-// to see if you can meet them in the meatspace™
-// (https://www.merriam-webster.com/dictionary/meatspace).
+	const onSubmit = async () => {
+		if (!audio) return alert('Cannot play audio :(');
+		isWaitingToSubmit = true;
 
-`.trim();
-		const subject = `How are you?`;
+		await wait(2000);
 
-		talk();
+		isSubmitting = true;
 
-		// setTimeout(() => {
-		// 	window.open(
-		// 		`mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
-		// 	);
-		// }, 1000);
+		audio.src = songPath;
+
+		await audio.play();
+		audio.loop = true;
+		audio.ontimeupdate = () =>
+			currentTime.update(() => {
+				return audio!.currentTime;
+			});
+
+		// audio.onpause = () => (location.href = '/done');
+
+		// talk();
+		// sendEmail();
 	};
 </script>
 
-<div class="content">
-	<Hero />
+<div class="background-container" class:is-active={isSubmitting} />
+<PageContainer>
+	<div class="content" class:is-active={isSubmitting}>
+		<Hero isActive={isSubmitting} />
 
-	<main>
-		<form on:submit|preventDefault={onSubmit} class:is-focused={isFocused}>
-			<input
-				type="text"
-				bind:value={searchQuery}
-				on:focus={() => (isFocused = true)}
-				on:blur={() => (isFocused = false)}
-				placeholder="Ask me anything"
-			/>
-			<button type="submit" disabled={!searchQuery.length} aria-label="Answer" />
-		</form>
-		<p class="tagline">Raising the steaks since 1988</p>
-	</main>
-</div>
+		<main class:is-hidden={isSubmitting}>
+			<form on:submit|preventDefault={onSubmit} class:is-focused={isFocused}>
+				<input
+					type="text"
+					value={isWaitingToSubmit ? 'Processing...' : searchQuery}
+					on:input={(e) => (searchQuery = e.currentTarget.value)}
+					on:focus={onFocus}
+					on:blur={() => (isFocused = false)}
+					placeholder="Ask me anything"
+					disabled={isWaitingToSubmit}
+				/>
+				<button
+					type="submit"
+					disabled={!searchQuery.length}
+					aria-label="Answer"
+					class:is-active={isWaitingToSubmit}
+				/>
+			</form>
+			<p class="tagline">Raising the steaks since 1988</p>
+		</main>
+	</div>
 
-<Footer>
-	<nav>
-		<a href="/about">About</a>
-		<a href="/privacy">Privacy</a>
-	</nav>
-</Footer>
+	<Footer>
+		<nav class:is-hidden={isSubmitting}>
+			<a href="/about">About</a>
+			<a href="/privacy">Privacy</a>
+		</nav>
+	</Footer>
+	<Cock isActive={isSubmitting} />
 
-<Cock />
+	{#if isSubmitting}
+		<PathText />
+	{/if}
+</PageContainer>
 
 <style>
+	.background-container {
+		background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.8)), url('/bg-active.png');
+		background-size: cover;
+		width: 100vw;
+		height: 100vh;
+		position: absolute;
+		opacity: 0;
+		transition: 0.6s opacity ease-in-out;
+	}
+
+	.background-container.is-active {
+		opacity: 1;
+	}
+
 	.content {
 		display: contents;
+
+		--transition-duration: 0.6s;
 	}
 
 	@media all and (min-width: 768px) {
@@ -81,6 +123,17 @@ Hi!
 			justify-content: center;
 			height: 100%;
 		}
+	}
+
+	main {
+		opacity: 1;
+		visibility: visible;
+		transition: var(--transition-duration) opacity, var(--transition-duration) visibility;
+	}
+
+	main.is-hidden {
+		opacity: 0;
+		visibility: hidden;
 	}
 
 	form {
@@ -96,7 +149,7 @@ Hi!
 	}
 
 	form.is-focused {
-		transition-duration: 0.5s;
+		transition-duration: var(--transition-duration);
 		border-color: var(--color-brand);
 		box-shadow: 0 0 0 100vh rgba(255, 255, 255, 0.7);
 	}
@@ -133,6 +186,23 @@ Hi!
 		width: 3rem;
 	}
 
+	button.is-active {
+		background: none transparent;
+	}
+	button.is-active::after {
+		content: '';
+		display: block;
+		position: absolute;
+
+		inset: 0.5rem;
+		border-radius: 100rem;
+		border: 0.25rem solid var(--color-text);
+		border-top-color: transparent;
+		border-bottom-color: transparent;
+
+		animation: rotate 1s linear infinite;
+	}
+
 	@media (hover: hover) {
 		button {
 			opacity: 1;
@@ -163,5 +233,25 @@ Hi!
 		margin: 1rem 0 0;
 		font-size: 0.75rem;
 		text-align: center;
+	}
+
+	nav {
+		opacity: 1;
+		visibility: visible;
+		transition: var(--transition-duration) opacity ease-in-out;
+	}
+
+	nav.is-hidden {
+		opacity: 0;
+		visibility: hidden;
+	}
+
+	@keyframes rotate {
+		from {
+			transform: rotate(0deg);
+		}
+		to {
+			transform: rotate(360deg);
+		}
 	}
 </style>
