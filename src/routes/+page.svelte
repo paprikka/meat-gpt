@@ -3,6 +3,7 @@
 	import Cock from '../components/cock.svelte';
 	import Footer from '../components/footer.svelte';
 	import Hero from '../components/hero.svelte';
+	import Merdogs from '../components/merdogs.svelte';
 	import PageContainer from '../components/page-container.svelte';
 	import PathText from '../components/path-text.svelte';
 	import { lyrics, songPath } from '../lyrics';
@@ -87,6 +88,8 @@
 
 	<img src="/fish.png" alt="A fish/dog" class="fish" class:is-active={$currentTime > 50} />
 </PageContainer>
+
+<Merdogs isActive={$currentTime > 36} />
 
 <style>
 	.background-container {
