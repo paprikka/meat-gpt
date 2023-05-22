@@ -93,7 +93,7 @@ export const captions = [
 
 	{
 		text: "Our hearts yearn for love's sweet hold",
-		offsetSeconds: 45.899,
+		offsetSeconds: 43.899,
 		durationSeconds: 4.919
 	},
 	{
