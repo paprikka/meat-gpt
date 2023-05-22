@@ -7,7 +7,7 @@ export const arm = () => {
 
 	audio = new Audio();
 	audio.src = '/silence.mp3';
-
+	audio.volume = 0.5;
 	audio
 		.play()
 		.then(() => isArmed.update(() => true))
