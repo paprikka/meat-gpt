@@ -1,11 +1,10 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { onMount, tick } from 'svelte';
 	import { lyrics, songDurationMSec } from '../lyrics';
-	import { tick } from 'svelte';
 	import { currentTime } from '../player';
 
 	let totalDuration = songDurationMSec;
-	let textOffset = -100_000;
+	let textOffset = 0;
 
 	function createSPath(x: number, y: number, endX: number, endY: number, n: number) {
 		const dx = (endX - x) / n;
@@ -21,27 +20,6 @@
 			path += ` C${cx1},${cy1} ${cx1},${cy2} ${cx2},${cy2}`;
 		}
 
-		return path;
-	}
-
-	function createCurvedPath(
-		x: number,
-		y: number,
-		endX: number,
-		endY: number,
-		points: [number, number][]
-	) {
-		let path = `M${x},${y}`;
-
-		points.forEach((point, index) => {
-			const nextPoint = points[index + 1] || [endX, endY];
-			const controlX = (point[0] + nextPoint[0]) / 2;
-			const controlY = (point[1] + nextPoint[1]) / 2;
-
-			path += ` Q${point[0]},${point[1]} ${controlX},${controlY}`;
-		});
-
-		path += ` T${endX},${endY}`;
 		return path;
 	}
 
@@ -61,15 +39,23 @@
 			rect.height * 0.95,
 			3
 		);
-
-		await tick();
 	});
 
-	const play = () => {
+	const play = async () => {
 		const path = document.querySelector<SVGPathElement>('#text-curve')!;
 		const pathLength = path.getTotalLength();
 		const text = document.querySelector<SVGTextPathElement>('#text-path')!;
-		const textLength = text.getComputedTextLength();
+
+		// Safari hack (getComputedTextLength is not reliable without more workarounds)
+		text.setAttribute('href', '#text-curve');
+		await tick();
+		const testEl = document.createElement('div');
+		testEl.style.width = '1rem';
+		document.body.appendChild(testEl);
+		const charWidth = testEl.getBoundingClientRect().width;
+		text.innerHTML = lyrics;
+		await tick();
+		const textLength = lyrics.length * charWidth;
 		const startOffset = pathLength;
 		textOffset = startOffset;
 
@@ -83,8 +69,10 @@
 
 		requestAnimationFrame(loop);
 	};
+
 	let isPlaying = false;
 	let isDone = false;
+
 	$: {
 		if ($currentTime > 12 && !isPlaying) {
 			isPlaying = true;
@@ -108,11 +96,12 @@
 		<text width="100%" style="transform:translate3d(0,0,0);">
 			<textPath
 				style="transform:translate3d(0,0,0);"
+				stroke="red"
+				fill="yellow"
 				alignment-baseline="central"
-				xlink:href="#text-curve"
 				startOffset={textOffset}
-				id="text-path">{lyrics}</textPath
-			>
+				id="text-path"
+			/>
 		</text>
 	</svg>
 {/if}
