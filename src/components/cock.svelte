@@ -1,4 +1,6 @@
 <script lang="ts">
+	import cockIMG from './cock.png';
+	import beakIMG from './beak.png';
 	import { captions, type Caption } from '../lyrics';
 	import { currentTime } from '../player';
 
@@ -36,8 +38,8 @@
 	href="https://sonnet.io"
 	target="_blank"
 >
-	<img src="/cock.png" class="face" alt="A cock." />
-	<img src="/beak.png" class="beak" class:is-talking={isTalking} alt="A beak." />
+	<img src={cockIMG} class="face" alt="A cock." />
+	<img src={beakIMG} class="beak" class:is-talking={isTalking} alt="A beak." />
 </a>
 
 <style>

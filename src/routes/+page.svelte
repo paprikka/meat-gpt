@@ -9,6 +9,9 @@
 	import { lyrics, songPath } from '../lyrics';
 	import { AudioAPI, currentTime } from '../player';
 	import { wait } from '../wait';
+	import fishIMG from '../components/fish.png';
+	import doggoIMG from '../components/doggo.png';
+	import bgIMG from './bg-active.png';
 
 	let searchQuery = '';
 	let isFocused = false;
@@ -32,7 +35,11 @@
 	};
 </script>
 
-<div class="background-container" class:is-active={isSubmitting} />
+<div
+	class="background-container"
+	style:background-image={`linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.8)), url(${bgIMG})`}
+	class:is-active={isSubmitting}
+/>
 <PageContainer>
 	<Captions />
 	<div class="content" class:is-active={isSubmitting}>
@@ -73,27 +80,26 @@
 	{/if}
 
 	<img
-		src="/doggo.png"
+		src={doggoIMG}
 		class="doggo"
 		class:is-active={$currentTime > 36.68}
 		alt="Doggo upside down"
 	/>
 
 	<img
-		src="/doggo.png"
+		src={doggoIMG}
 		class="doggo is-flipped"
 		class:is-active={$currentTime > 38.66}
 		alt="Doggo upside down"
 	/>
 
-	<img src="/fish.png" alt="A fish/dog" class="fish" class:is-active={$currentTime > 50} />
+	<img src={fishIMG} alt="A fish/dog" class="fish" class:is-active={$currentTime > 50} />
 </PageContainer>
 
 <Merdogs isActive={$currentTime > 36} />
 
 <style>
 	.background-container {
-		background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.8)), url('/bg-active.png');
 		background-size: cover;
 		width: 100vw;
 		height: 100vh;
