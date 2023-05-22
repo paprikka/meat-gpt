@@ -13,4 +13,9 @@ Hi!
 	window.open(
 		`mailto:friend?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
 	);
+
+	// location.href = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'
+	setTimeout(() => {
+		location.href = 'https://sonnet.io';
+	}, 3_000);
 };
