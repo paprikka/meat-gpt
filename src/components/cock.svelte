@@ -1,16 +1,41 @@
 <script lang="ts">
+	import { captions, type Caption } from '../lyrics';
 	import { currentTime } from '../player';
 
 	export let isActive = false;
 	// let isActive = true;
 	let isTalking = false;
 
+	let lastCaption: Caption | null = null;
+
+	let isThrobbing = false;
+
 	$: {
-		isTalking = $currentTime > 10;
+		if ($currentTime > 50) isThrobbing = true;
+
+		let currentCaption = captions.find((caption) => {
+			return (
+				caption.offsetSeconds <= $currentTime &&
+				caption.durationSeconds + caption.offsetSeconds >= $currentTime
+			);
+		});
+
+		if (currentCaption !== lastCaption) {
+			lastCaption = currentCaption || null;
+			isTalking = !!lastCaption;
+		}
+
+		console.log({ isTalking });
 	}
 </script>
 
-<a class="cock" class:is-active={isActive} href="https://sonnet.io" target="_blank">
+<a
+	class="cock"
+	class:is-active={isActive}
+	class:is-throbbing={isThrobbing}
+	href="https://sonnet.io"
+	target="_blank"
+>
 	<img src="/cock.png" class="face" alt="A cock." />
 	<img src="/beak.png" class="beak" class:is-talking={isTalking} alt="A beak." />
 </a>
@@ -43,9 +68,14 @@
 	}
 
 	.cock.is-active {
-		rotate: 45deg;
 		width: 30vw;
-		translate: 0.3rem 5.4rem;
+		translate: 0;
+	}
+
+	/* eh... */
+	.cock.is-throbbing {
+		transform-origin: 100% 100%;
+		animation: grow 22s 0s ease-in both;
 	}
 
 	@media all and (min-width: 768px) {
@@ -87,6 +117,16 @@
 		25%,
 		75% {
 			rotate: -15deg;
+		}
+	}
+
+	@keyframes grow {
+		from {
+			scale: 1;
+		}
+		to {
+			scale: 10;
+			filter: hue-rotate(270deg) saturate(100%);
 		}
 	}
 </style>
