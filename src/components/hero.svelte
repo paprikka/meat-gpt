@@ -1,12 +1,15 @@
 <script lang="ts">
+	import meatIMG from './meat.webp';
+	import guitarIMG from './guitar.png';
+	import eyesIMG from './eyes.png';
 	export let isActive = false;
 </script>
 
 <div class="container" class:is-active={isActive}>
 	<div class="meat-tuxedo">
-		<img src="./meat.webp" alt="A rare beef shoulder, isolated on a white background." />
-		<div class="eyes" />
-		<img src="/guitar.png" class="guitar" class:is-active={isActive} alt="A guitar" />
+		<img src={meatIMG} alt="A rare beef shoulder, isolated on a white background." />
+		<div class="eyes" style:background-image={`url(${eyesIMG})`} />
+		<img src={guitarIMG} class="guitar" class:is-active={isActive} alt="A guitar" />
 	</div>
 	<header>
 		<h1>M<span>e</span>atGPT</h1>
@@ -69,6 +72,7 @@
 	}
 
 	.meat-tuxedo {
+		aspect-ratio: 53/34;
 		position: relative;
 	}
 
@@ -80,7 +84,6 @@
 		position: absolute;
 		display: block;
 		inset: 25% 15% 15% 15%;
-		background-image: url(/eyes.png);
 		background-size: contain;
 		background-repeat: no-repeat;
 		background-position: center;

@@ -1,5 +1,11 @@
 <slot />
 
+<svelte:head>
+	<title>MeatGPT</title>
+	<link rel="prefetch" href="/silence.mp3" />
+	<link rel="prefetch" href="/music-alt.mp3" />
+</svelte:head>
+
 <style>
 	:global(*) {
 		box-sizing: border-box;

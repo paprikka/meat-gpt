@@ -1,4 +1,5 @@
 <script lang="ts">
+	import fishIMG from './fish.png';
 	export let isActive = false;
 	const dogs = Array(10).fill('');
 	const animationScale = 2;
@@ -22,7 +23,7 @@
 					class="merdog-rotate"
 					style:animation-duration="{(Math.random() * 2 + 0.5) * animationScale}s"
 				>
-					<img class="merdog" src="/fish.png" alt="fish" />
+					<img class="merdog" src={fishIMG} alt="fish" />
 				</div>
 			</div>
 		</div>
