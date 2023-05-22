@@ -6,6 +6,7 @@
 	<div class="meat-tuxedo">
 		<img src="./meat.webp" alt="A rare beef shoulder, isolated on a white background." />
 		<div class="eyes" />
+		<img src="/guitar.png" class="guitar" class:is-active={isActive} alt="A guitar" />
 	</div>
 	<header>
 		<h1>M<span>e</span>atGPT</h1>
@@ -84,7 +85,7 @@
 		background-repeat: no-repeat;
 		background-position: center;
 		opacity: 0;
-		transition: 0.4s 1s opacity ease-in-out;
+		transition: 1s 1s opacity ease-in-out;
 	}
 
 	.container.is-active .eyes {
@@ -95,6 +96,20 @@
 		height: auto;
 		max-width: 100%;
 		vertical-align: bottom;
+	}
+
+	.guitar {
+		position: absolute;
+		width: 60%;
+		bottom: 0;
+		right: 0;
+		z-index: 1;
+		opacity: 0;
+		transition: 0.6s 2.4s opacity ease-in-out;
+	}
+
+	.guitar.is-active {
+		opacity: 1;
 	}
 
 	@keyframes dance-up-and-down {
