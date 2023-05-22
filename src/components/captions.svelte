@@ -6,7 +6,6 @@
 	$: {
 		line =
 			captions.findLast((captionLine) => {
-				console.log({ captionLine, currentTime: $currentTime });
 				return captionLine.offsetSeconds < $currentTime;
 			})?.text || '';
 

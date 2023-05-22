@@ -1,13 +1,24 @@
 import { writable } from 'svelte/store';
-
 let audio: HTMLAudioElement | null = null;
 
 const isArmed = writable(false);
 export const arm = () => {
 	console.log('Arm audio player');
 
-	audio = new Audio('/silence.mp3');
-	audio.play().then(() => isArmed.update(() => true));
+	audio = new Audio();
+	audio.src = '/silence.mp3';
+
+	audio
+		.play()
+		.then(() => isArmed.update(() => true))
+		.then(() => {
+			console.log('Audio player armed');
+			audio!.pause();
+		})
+		.catch((error) => {
+			console.log('Error arming audio player', error);
+			isArmed.update(() => false);
+		});
 	(window as any).AudioAPI = AudioAPI;
 };
 
