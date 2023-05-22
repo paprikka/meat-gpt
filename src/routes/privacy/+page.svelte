@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { onDestroy, onMount } from 'svelte';
 	import Footer from '../../components/footer.svelte';
+	import PageContainer from '../../components/page-container.svelte';
 
 	let dots = 0;
 	let timer: null | number = null;
@@ -26,19 +27,21 @@
 	});
 </script>
 
-<main>
-	<p>
-		Haha fuck you
-		<br />
-		{Array(dots).fill('.').join('')}
-	</p>
-</main>
+<PageContainer>
+	<main>
+		<p>
+			Haha fuck you
+			<br />
+			{Array(dots).fill('.').join('')}
+		</p>
+	</main>
 
-<Footer>
-	<nav>
-		<a href="/">← back</a>
-	</nav>
-</Footer>
+	<Footer>
+		<nav>
+			<a href="/">← back</a>
+		</nav>
+	</Footer>
+</PageContainer>
 
 <style>
 	main {

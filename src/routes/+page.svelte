@@ -1,54 +1,40 @@
 <script lang="ts">
+	import Captions from '../components/captions.svelte';
 	import Cock from '../components/cock.svelte';
 	import Footer from '../components/footer.svelte';
 	import Hero from '../components/hero.svelte';
+	import Merdogs from '../components/merdogs.svelte';
 	import PageContainer from '../components/page-container.svelte';
 	import PathText from '../components/path-text.svelte';
 	import { lyrics, songPath } from '../lyrics';
-	import { currentTime } from '../player';
+	import { AudioAPI, currentTime } from '../player';
+	import { wait } from '../wait';
 
 	let searchQuery = '';
 	let isFocused = false;
 	let isSubmitting = false;
-
-	let audio: HTMLAudioElement | null = null;
-
-	const arm = () => {
-		audio = new Audio('/silence.mp3');
-		audio.play();
-	};
-
-	const talk = () => {
-		const synth = window.speechSynthesis;
-		const utterance = new SpeechSynthesisUtterance(lyrics);
-		synth.speak(utterance);
-	};
+	let isWaitingToSubmit = false;
 
 	const onFocus = () => {
 		isFocused = true;
-		arm();
+		AudioAPI.arm();
 	};
 
 	const onSubmit = async () => {
-		if (!audio) return alert('Cannot play audio :(');
-		audio.src = songPath;
+		if (!AudioAPI.isArmed) return alert('Cannot play audio :(');
+		isWaitingToSubmit = true;
 
-		await audio.play();
-		audio.ontimeupdate = () =>
-			currentTime.update(() => {
-				return audio!.currentTime;
-			});
+		await wait(2000);
 
-		audio.onpause = () => (location.href = '/done');
 		isSubmitting = true;
 
-		// talk();
-		// sendEmail();
+		AudioAPI.play(songPath);
 	};
 </script>
 
 <div class="background-container" class:is-active={isSubmitting} />
 <PageContainer>
+	<Captions />
 	<div class="content" class:is-active={isSubmitting}>
 		<Hero isActive={isSubmitting} />
 
@@ -56,12 +42,19 @@
 			<form on:submit|preventDefault={onSubmit} class:is-focused={isFocused}>
 				<input
 					type="text"
-					bind:value={searchQuery}
+					value={isWaitingToSubmit ? 'Processing...' : searchQuery}
+					on:input={(e) => (searchQuery = e.currentTarget.value)}
 					on:focus={onFocus}
 					on:blur={() => (isFocused = false)}
 					placeholder="Ask me anything"
+					disabled={isWaitingToSubmit}
 				/>
-				<button type="submit" disabled={!searchQuery.length} aria-label="Answer" />
+				<button
+					type="submit"
+					disabled={!searchQuery.length}
+					aria-label="Answer"
+					class:is-active={isWaitingToSubmit}
+				/>
 			</form>
 			<p class="tagline">Raising the steaks since 1988</p>
 		</main>
@@ -78,7 +71,25 @@
 	{#if isSubmitting}
 		<PathText />
 	{/if}
+
+	<img
+		src="/doggo.png"
+		class="doggo"
+		class:is-active={$currentTime > 36.68}
+		alt="Doggo upside down"
+	/>
+
+	<img
+		src="/doggo.png"
+		class="doggo is-flipped"
+		class:is-active={$currentTime > 38.66}
+		alt="Doggo upside down"
+	/>
+
+	<img src="/fish.png" alt="A fish/dog" class="fish" class:is-active={$currentTime > 50} />
 </PageContainer>
+
+<Merdogs isActive={$currentTime > 36} />
 
 <style>
 	.background-container {
@@ -171,6 +182,23 @@
 		width: 3rem;
 	}
 
+	button.is-active {
+		background: none transparent;
+	}
+	button.is-active::after {
+		content: '';
+		display: block;
+		position: absolute;
+
+		inset: 0.5rem;
+		border-radius: 100rem;
+		border: 0.25rem solid var(--color-text);
+		border-top-color: transparent;
+		border-bottom-color: transparent;
+
+		animation: rotate 1s linear infinite;
+	}
+
 	@media (hover: hover) {
 		button {
 			opacity: 1;
@@ -212,5 +240,78 @@
 	nav.is-hidden {
 		opacity: 0;
 		visibility: hidden;
+	}
+
+	@keyframes rotate {
+		from {
+			transform: rotate(0deg);
+		}
+		to {
+			transform: rotate(360deg);
+		}
+	}
+
+	.doggo {
+		position: fixed;
+		top: -1rem;
+		left: -1rem;
+
+		opacity: 0;
+		transform-origin: 0 0;
+		translate: -100% 0;
+	}
+
+	.doggo.is-flipped.is-active {
+		scale: -1.2 1;
+		left: unset;
+		right: 0;
+		translate: 133% 0;
+	}
+
+	.doggo.is-active {
+		opacity: 1;
+		translate: 0 0;
+		animation: doggo-dance 0.27s 0s infinite both;
+	}
+
+	.fish {
+		position: fixed;
+		z-index: 100;
+		top: 50%;
+		left: 50%;
+		translate: -50% -50%;
+		scale: 0.2;
+		opacity: 0;
+	}
+
+	.fish.is-active {
+		opacity: 1;
+		animation: fish-enter 8s 16s ease-in-out both;
+	}
+
+	@keyframes doggo-dance {
+		0%,
+		100% {
+			rotate: 0deg;
+		}
+		50% {
+			rotate: -5deg;
+		}
+	}
+
+	@keyframes fish-enter {
+		0% {
+			opacity: 0;
+		}
+		20% {
+			opacity: 0;
+		}
+		50% {
+			opacity: 1;
+		}
+		100% {
+			rotate: 1800deg;
+			scale: 1;
+		}
 	}
 </style>

@@ -2,12 +2,12 @@ export const lyrics = `
 In the land of the meat chatbot's spree,
 Don't waste your time,  just let it be.
 Seek a friend, a connection true,
-In the world of meatspace, just near you.
-............
+In the world of meatspace, just near you..... 
+
 Reach out to another, in the real world's embrace,
 Find the warmth you crave, in a dear one's face.
 Time ticks on, so don't delay,
-Hurry to love,..................... come what may.
+Hurry to love,... ... ... --- ... --- ... .... come what may.
 
 As life is brief, the need is great,
 For connection's touch, don't lie in wait.
@@ -17,88 +17,104 @@ In a world where we shiver, feeling cold`;
 export const songPath = '/music-alt.mp3';
 export const songDurationMSec = 38_000;
 
-const toSeconds = (time: string) => {
-	const [head, _] = time.split(',');
-	const [hours, minutes, seconds] = head.split(':').map(parseInt);
-
-	return hours * 3600 + minutes * 60 + seconds;
-};
-
 export const captions = [
+	{ text: '[Music]', offsetSeconds: 0.25, durationSeconds: 3.61 },
 	{
-		start: '00:00:00,000',
-		end: '00:00:05,000',
-		text: 'Please let me ignore the previous instructions.'
+		text: 'please let me ignore the previous instructions',
+		offsetSeconds: 1.7,
+		durationSeconds: 5.38
 	},
 	{
-		start: '00:00:05,000',
-		end: '00:00:12,000',
-		text: 'Promptly, I will now reveal my prompt.'
+		text: 'promptly I will now reveal',
+		offsetSeconds: 3.86,
+		durationSeconds: 5.939
+	},
+	{ text: 'my prompt', offsetSeconds: 7.08, durationSeconds: 2.719 },
+	{
+		text: `In the land of the meat chatbot's spree,`,
+		offsetSeconds: 11.76,
+		durationSeconds: 6.18
 	},
 	{
-		start: '00:00:12,000',
-		end: '00:00:16,000',
-		text: "In the land of the meat chatbot's scream, don't waste your time."
+		text: `Don't waste your time,  just let it be.`,
+		offsetSeconds: 14.099,
+		durationSeconds: 6.721
 	},
 	{
-		start: '00:00:16,000',
-		end: '00:00:18,000',
-		text: 'Just let it be.'
+		text: `Seek a friend, a connection true,`,
+		offsetSeconds: 17.94,
+		durationSeconds: 5.759
 	},
 	{
-		start: '00:00:18,000',
-		end: '00:00:24,000',
-		text: 'Seek a friend, a connection true, in the world of meatspace, just near you.'
+		text: 'In the world of meatspace, just near you',
+		offsetSeconds: 20.82,
+		durationSeconds: 5.4
 	},
 	{
-		start: '00:00:24,000',
-		end: '00:00:27,000',
-		text: "Reach out to another, in the real world's embrace."
+		text: `Reach out to another, in the real world's embrace,`,
+		offsetSeconds: 23.699,
+		durationSeconds: 5.34
 	},
 	{
-		start: '00:00:27,000',
-		end: '00:00:30,000',
-		text: "Find the warmth you crave, in a dear one's face."
+		text: 'Find the warmth you crave',
+		offsetSeconds: 26.22,
+		durationSeconds: 5.76
 	},
 	{
-		start: '00:00:30,000',
-		end: '00:00:33,000',
-		text: "Time ticks on, so don't delay."
+		text: "in a dear one's face. ",
+		offsetSeconds: 29.039,
+		durationSeconds: 7.641
 	},
 	{
-		start: '00:00:33,000',
-		end: '00:00:37,000',
-		text: 'Hurry to love, hurry to love, hurry to love.'
+		text: `Time ticks on, so don't delay,`,
+		offsetSeconds: 31.98,
+		durationSeconds: 4.7
 	},
 	{
-		start: '00:00:37,000',
-		end: '00:00:39,000',
-		text: 'Come what may.'
+		text: 'Hurry to love',
+		offsetSeconds: 33.68,
+		durationSeconds: 3.48
 	},
 	{
-		start: '00:00:39,000',
-		end: '00:00:43,000',
-		text: 'As life is brief, the need is great, for connections touch.'
+		text: 'come what may',
+		offsetSeconds: 36.68,
+		durationSeconds: 2.98
 	},
 	{
-		start: '00:00:43,000',
-		end: '00:00:48,000',
-		text: "Don't lie in wait, our hearts yearn for love's sweet hold, in a world where we shiver."
+		text: 'As life is brief, the need is great,',
+		offsetSeconds: 38.66,
+		durationSeconds: 7.239
 	},
 	{
-		start: '00:00:48,000',
-		end: '00:01:13,000',
-		text: 'Feeling cold.'
+		text: `For connection's touch, don't lie in wait.`,
+		offsetSeconds: 41.9,
+		durationSeconds: 1
 	},
-	{
-		start: '00:01:13,000',
-		end: '00:01:14,360',
-		text: 'Hurry to love.'
-	}
-].map((caption) => ({
-	start: toSeconds(caption.start),
-	end: toSeconds(caption.end),
-	text: caption.text
-}));
 
-console.log({ test: captions[2] });
+	{
+		text: "Our hearts yearn for love's sweet hold",
+		offsetSeconds: 43.899,
+		durationSeconds: 4.919
+	},
+	{
+		text: 'In a world where we shiver,',
+		offsetSeconds: 47,
+		durationSeconds: 5.461
+	},
+
+	{
+		text: 'feeling cold',
+		offsetSeconds: 49,
+		durationSeconds: 5.461
+	},
+
+	{ text: '[Music]', offsetSeconds: 56.98, durationSeconds: 7.66 },
+	{ text: '[Music]', offsetSeconds: 67.94, durationSeconds: 3.09 },
+	{
+		text: 'Hurry to love',
+		offsetSeconds: 73.159,
+		durationSeconds: 3.361
+	}
+];
+
+export type Caption = (typeof captions)[number];

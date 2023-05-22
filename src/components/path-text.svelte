@@ -86,7 +86,7 @@
 	let isPlaying = false;
 	let isDone = false;
 	$: {
-		if ($currentTime > 10 && !isPlaying) {
+		if ($currentTime > 12 && !isPlaying) {
 			isPlaying = true;
 			play();
 		}

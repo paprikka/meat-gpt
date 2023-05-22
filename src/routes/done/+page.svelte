@@ -1,27 +1,39 @@
 <script>
+	import Footer from '../../components/footer.svelte';
+	import PageContainer from '../../components/page-container.svelte';
 	import { sendEmail } from '../../send-email';
 </script>
 
-<div class="container">
-	<button on:click={sendEmail}>❤️ click me</button>
-</div>
+<PageContainer>
+	<main><p><button on:click={sendEmail}>❤️ click me</button></p></main>
+	<Footer>
+		<nav>
+			<a href="https://sonnet.io" target="_blank">About</a>
+		</nav>
+	</Footer>
+</PageContainer>
 
 <style>
-	.container {
-		position: fixed;
-		inset: 0;
-		background-color: var(--color-text);
+	main {
+		height: 100%;
+		height: 100%;
 		display: grid;
-		place-content: center;
+		place-items: center;
+	}
+
+	p {
+		margin: 0;
+		font-weight: 800;
+		text-transform: uppercase;
+		font-size: 1.25rem;
 	}
 
 	button {
-		border: 2px solid white;
-		font-size: 2rem;
 		color: var(--color-text);
-		background: var(--color-bg);
-		padding: 1rem;
-		border-radius: 0.5rem;
+		font-weight: 700;
+		font-size: 2rem;
+		background: none;
+		border: none;
 		cursor: pointer;
 	}
 </style>
