@@ -171,7 +171,7 @@
 
 	button {
 		background: transparent;
-		background-image: url(./zoom.svg);
+		background-image: url(/zoom.svg);
 		background-position: center;
 		background-repeat: no-repeat;
 		background-size: 1.5rem;

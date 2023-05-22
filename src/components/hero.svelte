@@ -80,7 +80,7 @@
 		position: absolute;
 		display: block;
 		inset: 25% 15% 15% 15%;
-		background-image: url(./eyes.png);
+		background-image: url(/eyes.png);
 		background-size: contain;
 		background-repeat: no-repeat;
 		background-position: center;
