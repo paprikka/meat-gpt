@@ -88,7 +88,6 @@
 		.cock.is-active {
 			rotate: 0deg;
 			width: 20vw;
-			translate: 0rem 10rem;
 		}
 	}
 
