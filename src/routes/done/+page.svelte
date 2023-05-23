@@ -13,7 +13,7 @@
 </PageContainer>
 <Footer>
 	<nav>
-		<a class="me" href="https://sonnet.io" target="_blank">Made with 🐐 and Rafal</a>
+		<a class="me" href="https://sonnet.io" target="_blank">Made by 🐐 and Rafal</a>
 
 		<span>Original music by <a href="https://itch.io/profile/dos88" target="_blank">DOS88</a></span>
 	</nav>
