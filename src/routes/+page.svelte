@@ -30,7 +30,6 @@
 	const onSubmit = async () => {
 		if (!AudioAPI.isArmed) return alert('Cannot play audio :(');
 		isWaitingToSubmit = true;
-		window.scrollTo(0, 0);
 		await wait(2000);
 
 		isSubmitting = true;
@@ -56,7 +55,10 @@
 					value={isWaitingToSubmit ? 'Processing...' : searchQuery}
 					on:input={(e) => (searchQuery = e.currentTarget.value)}
 					on:focus={onFocus}
-					on:blur={() => (isFocused = false)}
+					on:blur={() => {
+						window.scrollTo(0, 0);
+						isFocused = false;
+					}}
 					placeholder="Ask me anything"
 					disabled={isWaitingToSubmit}
 				/>
