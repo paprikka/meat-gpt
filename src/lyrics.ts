@@ -62,17 +62,17 @@ export const captions = [
 	},
 	{
 		text: "in a dear one's face. ",
-		offsetSeconds: 29.039,
+		offsetSeconds: 28.5,
 		durationSeconds: 7.641
 	},
 	{
 		text: `Time ticks on, so don't delay,`,
-		offsetSeconds: 31.98,
+		offsetSeconds: 30.5,
 		durationSeconds: 4.7
 	},
 	{
 		text: 'Hurry to love',
-		offsetSeconds: 33.68,
+		offsetSeconds: 33.0,
 		durationSeconds: 3.48
 	},
 	{

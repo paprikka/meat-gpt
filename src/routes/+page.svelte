@@ -12,6 +12,7 @@
 	import fishIMG from '../components/fish.png';
 	import doggoIMG from '../components/doggo.png';
 	import bgIMG from './bg-active.png';
+	import Fishdog from '../components/fishdog.svelte';
 
 	let searchQuery = '';
 	let isFocused = false;
@@ -93,10 +94,16 @@
 		alt="Doggo upside down"
 	/>
 
-	<img src={fishIMG} alt="A fish/dog" class="fish" class:is-active={$currentTime > 50} />
+	{#if $currentTime > 32}
+		<Fishdog />
+	{/if}
 </PageContainer>
 
 <Merdogs isActive={$currentTime > 36} />
+
+{#if isSubmitting || isWaitingToSubmit}
+	<div class="block-interactions" />
+{/if}
 
 <style>
 	.background-container {
@@ -280,21 +287,6 @@
 		animation: doggo-dance 0.27s 0s infinite both;
 	}
 
-	.fish {
-		position: fixed;
-		z-index: 100;
-		top: 50%;
-		left: 50%;
-		translate: -50% -50%;
-		scale: 0.2;
-		opacity: 0;
-	}
-
-	.fish.is-active {
-		opacity: 1;
-		animation: fish-enter 8s 16s ease-in-out both;
-	}
-
 	@keyframes doggo-dance {
 		0%,
 		100% {
@@ -305,19 +297,12 @@
 		}
 	}
 
-	@keyframes fish-enter {
-		0% {
-			opacity: 0;
-		}
-		20% {
-			opacity: 0;
-		}
-		50% {
-			opacity: 1;
-		}
-		100% {
-			rotate: 1800deg;
-			scale: 1;
-		}
+	.block-interactions {
+		z-index: 10000;
+		position: fixed;
+		inset: 0;
+		user-select: none;
+		cursor: url('/cursor-not-allowed.png') 0 0, auto;
+		/* pointer-events: none; */
 	}
 </style>

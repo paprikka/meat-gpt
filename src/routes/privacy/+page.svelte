@@ -44,6 +44,9 @@
 </PageContainer>
 
 <style>
+	:global(body) {
+		cursor: url('/cursor.png') 0 0, auto;
+	}
 	main {
 		height: 100%;
 		height: 100%;
