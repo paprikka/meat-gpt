@@ -70,7 +70,7 @@
 
 	<Footer>
 		<nav class:is-hidden={isSubmitting}>
-			<a href="/about">About</a>
+			<a href="https://sonnet.io" target="_blank">About</a>
 			<a href="/privacy">Privacy</a>
 		</nav>
 	</Footer>
@@ -303,6 +303,5 @@
 		inset: 0;
 		user-select: none;
 		cursor: url('/cursor-not-allowed.png') 0 0, auto;
-		/* pointer-events: none; */
 	}
 </style>
