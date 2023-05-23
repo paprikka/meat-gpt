@@ -4,6 +4,13 @@
 	<title>MeatGPT</title>
 	<link rel="prefetch" href="/silence.mp3" />
 	<link rel="prefetch" href="/music-alt.mp3" />
+	<script
+		async
+		defer
+		data-domains="meat-gpt.sonnet.io"
+		data-website-id="4b8b922b-92a0-4389-995c-130f989ac791"
+		src="https://sonnet-events.vercel.app/umami.js"
+	></script>
 </svelte:head>
 
 <style>
