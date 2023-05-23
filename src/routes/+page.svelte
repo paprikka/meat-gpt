@@ -30,7 +30,7 @@
 	const onSubmit = async () => {
 		if (!AudioAPI.isArmed) return alert('Cannot play audio :(');
 		isWaitingToSubmit = true;
-
+		window.scrollTo(0, 0);
 		await wait(2000);
 
 		isSubmitting = true;
