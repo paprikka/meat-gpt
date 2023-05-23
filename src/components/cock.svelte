@@ -5,7 +5,6 @@
 	import { currentTime } from '../player';
 
 	export let isActive = false;
-	// let isActive = true;
 	let isTalking = false;
 
 	let lastCaption: Caption | null = null;
@@ -13,7 +12,7 @@
 	let isThrobbing = false;
 
 	$: {
-		if ($currentTime > 50) isThrobbing = true;
+		if ($currentTime > 48) isThrobbing = true;
 
 		let currentCaption = captions.find((caption) => {
 			return (
@@ -77,7 +76,7 @@
 	/* eh... */
 	.cock.is-throbbing {
 		transform-origin: 100% 100%;
-		animation: grow 22s 0s ease-in both;
+		animation: grow 15s 0s ease-in both;
 	}
 
 	@media all and (min-width: 768px) {
@@ -88,6 +87,10 @@
 		.cock.is-active {
 			rotate: 0deg;
 			width: 20vw;
+		}
+
+		.cock.is-throbbing {
+			animation-name: grow-desktop;
 		}
 	}
 
@@ -126,7 +129,21 @@
 			scale: 1;
 		}
 		to {
-			scale: 10;
+			translate: 0 0;
+			scale: 5;
+			transform-origin: 80% 90%;
+			filter: hue-rotate(270deg) saturate(100%);
+		}
+	}
+
+	@keyframes grow-desktop {
+		from {
+			scale: 1;
+		}
+		to {
+			translate: 0 0;
+			scale: 5;
+			transform-origin: 100% 27vh;
 			filter: hue-rotate(270deg) saturate(100%);
 		}
 	}

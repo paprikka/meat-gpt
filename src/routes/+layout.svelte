@@ -3,7 +3,7 @@
 <svelte:head>
 	<title>MeatGPT</title>
 	<link rel="prefetch" href="/silence.mp3" />
-	<link rel="prefetch" href="/music-alt.mp3" />
+	<link rel="prefetch" href="/music-alt-shorter.mp3" />
 	<script
 		async
 		defer

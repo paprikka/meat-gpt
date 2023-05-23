@@ -14,7 +14,7 @@ For connection's touch, don't lie in wait.
 Our hearts yearn for love's sweet hold,
 In a world where we shiver, feeling cold`;
 
-export const songPath = '/music-alt.mp3';
+export const songPath = '/music-alt-shorter.mp3';
 export const songDurationMSec = 38_000;
 
 export const captions = [
@@ -109,10 +109,9 @@ export const captions = [
 	},
 
 	{ text: '[Music]', offsetSeconds: 56.98, durationSeconds: 7.66 },
-	{ text: '[Music]', offsetSeconds: 67.94, durationSeconds: 3.09 },
 	{
 		text: 'Hurry to love',
-		offsetSeconds: 73.159,
+		offsetSeconds: 64.159,
 		durationSeconds: 3.361
 	}
 ];
