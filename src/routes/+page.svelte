@@ -77,7 +77,6 @@
 			<a href="/privacy">Privacy</a>
 		</nav>
 	</Footer>
-	<Cock isActive={isSubmitting} />
 
 	{#if isSubmitting}
 		<PathText />
@@ -97,12 +96,14 @@
 		alt="Doggo upside down"
 	/>
 
-	{#if $currentTime > 32}
+	{#if $currentTime > 34.5}
 		<Fishdog />
 	{/if}
 </PageContainer>
 
-<Merdogs isActive={$currentTime > 36} />
+<Cock isActive={isSubmitting} />
+
+<Merdogs isActive={$currentTime > 43} />
 
 {#if isSubmitting || isWaitingToSubmit}
 	<div class="block-interactions" />
