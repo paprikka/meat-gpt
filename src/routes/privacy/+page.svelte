@@ -13,7 +13,11 @@
 				return;
 			}
 
-			location.href = 'https://mrr.sonnet.io/';
+			// TODO: hack, remove
+			if (location.pathname === '/privacy') {
+				location.href = 'https://mrr.sonnet.io/';
+			}
+
 			if (!timer) return;
 			clearTimeout(timer);
 		};
