@@ -1,7 +1,6 @@
-<script>
-	import Footer from '../../components/footer.svelte';
-	import PageContainer from '../../components/page-container.svelte';
-	import { sendEmail } from '../../send-email';
+<script lang="ts">
+	import Footer from './footer.svelte';
+	import { sendEmail } from '../send-email';
 </script>
 
 <div class="container">

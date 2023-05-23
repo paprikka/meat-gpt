@@ -34,9 +34,9 @@ export const play = async (songPath: string) => {
 			return audio!.currentTime;
 		});
 
-	audio.onpause = () => {
-		if (audio && audio.currentTime > 50) location.href = '/done';
-	};
+	// audio.onpause = () => {
+	// 	if (audio && audio.currentTime > 50) location.href = '/done';
+	// };
 };
 
 export const currentTime = writable(0);

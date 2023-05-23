@@ -14,6 +14,7 @@
 	import bgIMG from './bg-active.png';
 	import Fishdog from '../components/fishdog.svelte';
 	import { onMount } from 'svelte';
+	import Done from '../components/done.svelte';
 
 	let searchQuery = '';
 	let isFocused = false;
@@ -106,6 +107,10 @@
 
 {#if isSubmitting || isWaitingToSubmit}
 	<div class="block-interactions" />
+{/if}
+
+{#if $currentTime > 5}
+	<Done />
 {/if}
 
 <style>
