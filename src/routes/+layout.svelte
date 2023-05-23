@@ -1,7 +1,10 @@
+<script>
+	import SocialMeta from '../components/socialMeta.svelte';
+</script>
+
 <slot />
 
 <svelte:head>
-	<title>MeatGPT</title>
 	<link rel="prefetch" href="/silence.mp3" />
 	<link rel="prefetch" href="/music-alt-shorter.mp3" />
 	<script
@@ -11,6 +14,22 @@
 		data-website-id="4b8b922b-92a0-4389-995c-130f989ac791"
 		src="https://sonnet-events.vercel.app/umami.js"
 	></script>
+
+	<SocialMeta
+		title="MeatGPT"
+		url="https://meat-gpt.sonnet.io/"
+		socialImage={{
+			absoluteUrl: 'https://meat-gpt.sonnet.io/social.png',
+			height: 506,
+			width: 1012
+		}}
+		description="Prime answers to rare questions."
+		siteConfig={{
+			name: 'MeatGPT',
+			twitterCreator: '@rafalpast',
+			twitterSite: '@rafalpast'
+		}}
+	/>
 </svelte:head>
 
 <style>
