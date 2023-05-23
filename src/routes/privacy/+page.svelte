@@ -18,7 +18,7 @@
 			clearTimeout(timer);
 		};
 
-		// loop();
+		loop();
 	});
 
 	onDestroy(() => {
