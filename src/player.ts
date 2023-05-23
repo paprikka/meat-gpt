@@ -41,9 +41,16 @@ export const play = async (songPath: string) => {
 
 export const currentTime = writable(0);
 
+const preload = (path: string) => {
+	const audio = new Audio(path);
+	audio.preload = 'auto';
+	audio.load();
+};
+
 export const AudioAPI = {
 	play,
 	arm,
 	isArmed,
+	preload,
 	getElement: () => audio
 };

@@ -13,11 +13,14 @@
 	import doggoIMG from '../components/doggo.png';
 	import bgIMG from './bg-active.png';
 	import Fishdog from '../components/fishdog.svelte';
+	import { onMount } from 'svelte';
 
 	let searchQuery = '';
 	let isFocused = false;
 	let isSubmitting = false;
 	let isWaitingToSubmit = false;
+
+	onMount(() => AudioAPI.preload(songPath));
 
 	const onFocus = () => {
 		isFocused = true;
