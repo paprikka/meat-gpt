@@ -7,7 +7,9 @@
 <PageContainer>
 	<main>
 		<p>
-			<button on:click={sendEmail}><strong>❤️</strong> click me</button>
+			<button data-umami-event="open-email-click" on:click={sendEmail}
+				><strong>❤️</strong> click me</button
+			>
 		</p>
 	</main>
 </PageContainer>
