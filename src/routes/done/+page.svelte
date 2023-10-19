@@ -4,7 +4,7 @@
 	import { sendEmail } from '../../send-email';
 </script>
 
-<a class="tip" href="https://rafal.ck.page/products/tip">tip me</a>
+<a class="tip" data-umami-event="tip-click" href="https://rafal.ck.page/products/tip">tip me</a>
 <PageContainer>
 	<main>
 		<p>
