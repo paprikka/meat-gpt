@@ -4,6 +4,7 @@
 	import { sendEmail } from '../../send-email';
 </script>
 
+<a class="tip" href="https://rafal.ck.page/products/tip">tip me</a>
 <PageContainer>
 	<main>
 		<p>
@@ -90,5 +91,20 @@
 
 	nav a.me {
 		font-size: 1.25rem;
+	}
+
+	.tip {
+		position: absolute;
+		top: 1rem;
+		right: 1rem;
+		font-weight: 600;
+		color: var(--color-text);
+	}
+
+	.tip::after {
+		content: '🥩';
+		display: inline-block;
+		position: absolute;
+		left: -1.5rem;
 	}
 </style>
